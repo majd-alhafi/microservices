@@ -1,4 +1,3 @@
-```markdown
 # Spring Boot Microservices 🚀
 
 This project consists of three microservices: Product, Order, and Inventory, designed to showcase the power of Spring Boot and the microservices architecture.
@@ -39,8 +38,4 @@ This project consists of three microservices: Product, Order, and Inventory, des
 - MySQL
 - Keycloak
 - Circuit Breaker (Resilience4j)
-- Docker
 - Maven
-```
-
-
