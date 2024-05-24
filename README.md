@@ -1,43 +1,46 @@
-# 🚀 Microservices with Spring Boot
+```markdown
+# Spring Boot Microservices 🚀
 
-This project consists of 3 microservices built using Spring Boot:
+This project consists of three microservices: Product, Order, and Inventory, designed to showcase the power of Spring Boot and the microservices architecture.
 
-1. 🛒 Order Service
-2. 🏪 Inventory Service
-3. 📦 Product Service
+## Microservices 🔍
 
-## 💼 Microservices Overview
+### Product Microservice 📦
+- This microservice is responsible for managing product-related operations.
+- It uses **MongoDB** as the database to store product information.
 
-### 🛒 Order Service
-- Manages customer orders
-- Communicates with Inventory Service to check product availability
-- Uses MySQL as the database
+### Order Microservice 🛒
+- This microservice handles order-related functionalities.
+- It uses **MySQL** as the database to store order details.
+- It includes a **Circuit Breaker** pattern to handle failures when communicating with the Inventory microservice.
 
-### 🏪 Inventory Service
-- Manages product inventory
-- Provides information about product availability
-- Uses MySQL as the database
+### Inventory Microservice 📚
+- This microservice manages the inventory of products.
+- It uses **MySQL** as the database to store inventory data.
 
-### 📦 Product Service
-- Manages product information
-- Stores product data in a MongoDB database
+## Architecture 🏗️
+- **API Gateway**: The application uses an API Gateway, which is responsible for routing requests to the appropriate microservice. In this project, **Keycloak** is used as the authenticator for the API Gateway.
+- **Service Discovery**: The microservices use a service discovery mechanism to locate and communicate with each other.
+- **Circuit Breaker**: The Order microservice utilizes the **Circuit Breaker** pattern to handle failures when communicating with the Inventory microservice, ensuring resilient and fault-tolerant behavior.
 
-## 🛠️ Technology Stack
+## Features ✨
+
+- **Product Management**: Create, read, update, and delete products.
+- **Order Management**: Place orders, view order history, and manage order status.
+- **Inventory Management**: Track and manage product inventory levels.
+- **Authentication and Authorization**: Secure access to the microservices using Keycloak.
+- **Resilient Communication**: The Order microservice uses a Circuit Breaker pattern to handle failures when communicating with the Inventory microservice.
+
+## Technologies Used 🛠️
 
 - Spring Boot
-- MySQL
+- Spring Cloud
 - MongoDB
+- MySQL
+- Keycloak
+- Circuit Breaker (Resilience4j)
 - Docker
-
-
-Access the microservices at the following URLs:
-- Order Service: `http://localhost:8081`
-- Inventory Service: `http://localhost:8082`
-- Product Service: `http://localhost:8080`
-
-
-## 🤝 Contributing
-
-We welcome contributions to this project. If you find any issues or have suggestions for improvements, please feel free to open a new issue or submit a pull request.
+- Maven
+```
 
 
