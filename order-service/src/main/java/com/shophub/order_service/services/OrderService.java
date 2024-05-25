@@ -3,15 +3,16 @@ package com.shophub.order_service.services;
 import com.shophub.order_service.dto.InventoryResponse;
 import com.shophub.order_service.dto.OrderLineItemDto;
 import com.shophub.order_service.dto.OrderRequest;
+import com.shophub.order_service.events.OrderPlacedEvent;
 import com.shophub.order_service.models.Order;
 import com.shophub.order_service.models.OrderLineItem;
 import com.shophub.order_service.repositories.OrderRepository;
 import lombok.*;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.util.UriBuilder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +27,7 @@ public class OrderService {
     private final DiscoveryClient discoveryClient;
     private final OrderRepository orderRepository;
     private final WebClient.Builder webClientBuilder;
+    private final KafkaTemplate<String,OrderPlacedEvent> kafkaTemplate;
     public String placeOrder(OrderRequest orderRequest){
         List<OrderLineItem> orderLineItemList = orderRequest.getOrderLineItemDtoList()
                 .stream()
@@ -58,6 +60,10 @@ public class OrderService {
                 .allMatch(InventoryResponse::isInStock); //check if all products is in the stock.
         if(allProductsInStock) {
             orderRepository.save(order);
+            OrderPlacedEvent orderPlacedEvent = OrderPlacedEvent.builder()
+                    .orderNumber(order.getOrderNumber())
+                    .build();
+            kafkaTemplate.send("NotificationTopic",orderPlacedEvent);
             return "successfully";
         }
         else{
