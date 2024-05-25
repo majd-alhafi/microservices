@@ -37,5 +37,6 @@ This project consists of three microservices: Product, Order, and Inventory, des
 - MongoDB
 - MySQL
 - Keycloak
+- Kafka
 - Circuit Breaker (Resilience4j)
 - Maven
